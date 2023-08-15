@@ -4,11 +4,8 @@ import sqlite_utils
 from .utils import load_tokens, _auth_challenge, _refresh_token_request, _save_auth_token, _get_data
 
 # default values
-DEFAULT_SPREADSHEET_ID = '1mfC6kx1Ex9HBGsd_O9sTxrmYIfxk4tb5DEgIcH3jBT4'
-DEFAULT_SHEET_RANGE = 'Feuille 1'  # TODO : handle default first sheet, params
-
-DEFAULT_CLIENT_ID = "971365177128-o6g7sv04t306nqbfplenha4chpv1pb4p.apps.googleusercontent.com"
-DEFAULT_CLIENT_SECRET = "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"
+DEFAULT_SPREADSHEET_ID = '1Zx7Aieu8XmXLKe5kkce9IUfWpRtiwC7InvVR6HImJHI'
+DEFAULT_SHEET_RANGE = 'Sheet1'  # TODO : handle default first sheet, params
 
 
 # constants
@@ -26,7 +23,7 @@ def cli():
     pass
 
 
-@click.command()
+@cli.command()
 @click.option(
     "--id",
     type=str,
@@ -64,7 +61,7 @@ def authenticate(id, secret, auth):
     click.echo("ok")
 
 
-@click.command()
+@cli.command()
 @click.argument(
     "database",
     type=click.Path(file_okay=True, dir_okay=False, allow_dash=False),
@@ -107,10 +104,3 @@ def get(database, table, spreadsheet_id, sheet_range, auth, header):
     keys = values[header]  # first row is keys
     zipped = [dict(zip(keys, row)) for row in values[header + 1:]]
     db[table].insert_all(zipped)
-
-
-if __name__ == "__main__":
-    # TODO : handle click for making CLI... for now runs with `python cli.py authenticate`
-    cli.add_command(authenticate)
-    cli.add_command(get)
-    cli()
