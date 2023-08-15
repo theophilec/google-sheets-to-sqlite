@@ -1,0 +1,6 @@
+auth.json
+**.egg-info/
+
+**.egg-info/
+.idea/
+build/
