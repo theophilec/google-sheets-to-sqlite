@@ -56,9 +56,9 @@ def _refresh_token_request(client_id, client_secret, refresh_token):
 
 
 def _auth_challenge(client_id, client_secret):
+    SCOPE = 'https://www.googleapis.com/auth/spreadsheets.readonly'
     print(f"Please copy & paste the following URL into a web browser and authorize the request.")
     print(f"Then copy & paste the code you obtain in the URL (your browser should give you an error) below:\n")
-    print(f"Code: ")
     copied_code = input("Code: ")
     response = _auth_copied_code_request(copied_code, client_id, client_secret)
     refresh_token = response["refresh_token"]
@@ -98,5 +98,5 @@ def _get_data(access_token, spreadsheet_id, sheet_range):
     if response.status_code == httpx.codes.OK:
         return response.json()
     else:
-        print(response)
+        print(response.json().message)
         click.ClickException("Error when getting data...")

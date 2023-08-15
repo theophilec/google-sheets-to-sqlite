@@ -94,13 +94,10 @@ def get(database, table, spreadsheet_id, sheet_range, auth, header):
     except FileNotFoundError:
         click.ClickException("Auth token not found. Wrong path or use authenticate first.")
 
-    db = sqlite_utils.Database(database)
-    ranges = None
-    tables = []
+    db = sqlite_utils.Database(database, recreate=True)
     contents = _get_data(access_token, spreadsheet_id, sheet_range)
     # TODO: understand need to refresh
     values = contents["values"]
-    n_rows = len(values)
     keys = values[header]  # first row is keys
     zipped = [dict(zip(keys, row)) for row in values[header + 1:]]
     db[table].insert_all(zipped)

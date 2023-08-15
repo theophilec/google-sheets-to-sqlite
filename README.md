@@ -16,9 +16,16 @@ Install this tool using `pip` in the repository root:
 
 ## Quickstart
 
-Authenticate with Google Sheets by running:
+Get you Google Developer account ready:
 
-    google-sheets-to-sqlite authenticate
+1. Create a Google Developer Project: https://console.cloud.google.com/projectcreate
+2. OAuth Consent Screen: [click here](https://console.cloud.google.com/apis/credentials/consent) then choose External and add an app, add `https://www.googleapis.com/auth/spreadsheets.readonly` to the scopes and an account you have access to as a Test user. The Test user should have access to the documents you want to import with this tool.
+3. Create OAuth 2.0 Credentials: [click here](https://console.cloud.google.com/apis/credentials). These credentials are needed below. 
+4. Activate the Sheets API : [click here](https://console.developers.google.com/apis/api/sheets.googleapis.com/overview) and "Enable" the Google Sheets API without which your requests will be rejected with a code 403.
+
+Authenticate with Google Sheets with the credentials you created above:
+
+    google-sheets-to-sqlite authenticate --id <client id> <client secret>
 
 Now create a SQLite database with the data in "Sheet 1" of document with sheet id "sheet_id":
 
@@ -35,7 +42,7 @@ You can explore the resulting database using [Datasette](https://datasette.io/):
 ## TODO
 
 - Tests
-- pip package, CI?
+- pypi package, CI?
 - Handle primary key from data
 - Handle partial arguments (missing table, missing sheet name, ...)
 - Handle datatypes?
